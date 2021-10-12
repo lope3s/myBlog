@@ -4,9 +4,6 @@ import { IUser } from '../../Types/IUsers';
 import checkUserAlreadyExist from '../../services/checkUserAlreadyExist';
 import createPassHash from '../../services/createPassHash';
 import { checkFields } from '../../middlewares/checkFields';
-import jwt from 'jsonwebtoken';
-
-import { ObjectId } from 'mongodb'
 
 const db = client.db()
 const registerRoute = express.Router()
@@ -27,27 +24,8 @@ registerRoute.post("/register", checkFields(['userName', 'password', 'email']), 
                     comments: [], 
                     likes: [], 
                     isLogged: false,
-                    refreshToken: '' as unknown as ObjectId
+                    refreshToken: null
                 }
-
-                //mudar toda a lógica de criação de refreshToken para a rota de login;
-
-                const tokenUserData: any = hashedUserData
-
-                delete tokenUserData.password
-
-                const refreshToken = jwt.sign(tokenUserData, String(process.env.HASH_REFRESH_TOKEN_DATA))
-
-                const today = new Date()
-
-                const refreshTokenId = await db
-                .collection('tokens')
-                .insertOne({
-                    refreshToken, 
-                    expireDate: new Date(today.getFullYear(), today.getMonth() + 3, today.getDate())
-                })
-
-                hashedUserData.refreshToken = refreshTokenId.insertedId
 
                 await db.collection("users").insertOne(hashedUserData)
 
