@@ -6,7 +6,6 @@ import createPassHash from '../../services/createPassHash';
 import jwt from 'jsonwebtoken';
 
 import { ILogin } from '../../Types/ILogin';
-import { IUser } from '../../Types/IUsers';
 import { ObjectId } from 'mongodb';
 
 const db = client.db()

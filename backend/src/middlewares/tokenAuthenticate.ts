@@ -1,6 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
 
+/**
+ * Verifica se um token de autênticação foi informado e se o token é válido.
+ * @returns Retorna os dados do usuário parseado em req.body.user.
+ */
+
 export const tokenAuthenticate = () => (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization
     const token = authHeader?.split(" ")[1]
