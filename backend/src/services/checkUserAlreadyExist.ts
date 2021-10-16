@@ -1,9 +1,11 @@
 import { client } from '../db'
 
 /**
- * Verifica pelo email passado se o usuário já existe no banco.
- * Caso receba userName deve receber uma projeção dos campos a serem retornados da filtragem, é utilizado em uma filtragem dupla.
- * Retorna os dados encontrados pela filtragem.
+ * @param email Verifica pelo email passado se o usuário já existe no banco.
+ * @param userName Caso receba userName deve receber uma projection também.
+ * @param projection Parâmetro opcional utilizado para reduzir os campos retornados do banco, passar uma projection significa utilizar a função para verificar
+ * tanto o email quando o userName
+ * @returns Retorna os dados encontrados pela filtragem.
  */
 
 const checkUserAlreadyExist = async (email: string, userName?: string, projection?: object) => {

@@ -6,6 +6,7 @@ import createPassHash from '../../services/createPassHash';
 import jwt from 'jsonwebtoken';
 
 import { ILogin } from '../../Types/ILogin';
+import { ObjectId } from 'mongodb';
 
 const db = client.db()
 const loginRoute = express.Router()
@@ -24,7 +25,7 @@ loginRoute.post('/login', checkFields(['email', 'password']), async(req: Request
         .collection('users')
         .aggregate([
             {$match: {email, password: createPassHash(password)}}, 
-            {$project: {userName: 1, posts: 1, likes: 1, isLogged: 1, email: 1, comments: 1}}
+            {$project: {userName: 1, isLogged: 1, email: 1}}
         ])
         .toArray()
 
@@ -32,20 +33,37 @@ loginRoute.post('/login', checkFields(['email', 'password']), async(req: Request
             return res.status(400).send({message: "Dados de acesso inválidos"}).end()
         }
 
-        const token = jwt.sign(matchedUser[0], String(process.env.HASH_TOKEN_DATA))
+        const token = jwt.sign(matchedUser[0], String(process.env.HASH_TOKEN_DATA), {expiresIn: '30m'})
 
         const refreshToken = jwt.sign(matchedUser[0], String(process.env.HASH_REFRESH_TOKEN_DATA))
 
         const today = new Date()
 
-        const refreshTokenId = await db
+        const updateToken = await db
         .collection('tokens')
-        .insertOne({
-            refreshToken, 
-            expireDate: new Date(today.getFullYear(), today.getMonth() + 3, today.getDate())
+        .findOneAndUpdate({
+            userId: new ObjectId(matchedUser[0]._id)
+        }, {
+            $set: {
+                refreshToken, 
+                expireDate: new Date(today.getFullYear(), today.getMonth() + 3, today.getDate())
+            } 
         })
 
-        db.collection('users').findOneAndUpdate({_id: matchedUser[0]._id}, {$set: {refreshToken: refreshTokenId.insertedId}})
+        if (!updateToken.value){
+            const refreshTokenId = await db
+            .collection('tokens')
+            .insertOne({
+                userId: matchedUser[0]._id,
+                refreshToken, 
+                expireDate: new Date(today.getFullYear(), today.getMonth() + 3, today.getDate())
+            })
+
+            db.collection('users').findOneAndUpdate({_id: matchedUser[0]._id}, {$set: {refreshToken: refreshTokenId.insertedId, isLogged: true}})
+
+        }
+        
+        db.collection('users').findOneAndUpdate({_id: matchedUser[0]._id}, {$set: {isLogged: true}})
 
         return res.status(200).send({token, refreshToken})
 
