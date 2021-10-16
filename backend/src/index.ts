@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { main } from './db';
+import { join } from 'path';
 
 import registerRoute from './routes/authRoutes/registerRoute';
 import loginRoute from './routes/authRoutes/loginRoute';
@@ -13,10 +14,14 @@ import commentRoute from './routes/commentsRoutes/commentsRoutes';
 
 import likeRoute from './routes/likeRoutes/likeRoutes';
 
+import assetsRoutes from './routes/assetsRoutes/assetsRoutes';
+
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use("/myBlogApi", express.static(join(__dirname, "../uploads")));
 
 app.use('/myBlogApi', registerRoute);
 
@@ -29,6 +34,8 @@ app.use('/myBlogApi', postRoute)
 app.use('/myBlogApi', commentRoute)
 
 app.use('/myBlogApi', likeRoute)
+
+app.use('/myBlogApi', assetsRoutes)
 
 app.get('/myBlogApi', (_req, res) => {
     res.status(200).send({message: "attached"}).end();
