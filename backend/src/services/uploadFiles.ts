@@ -7,9 +7,9 @@ import { v4 } from 'uuid';
 
 const storage = multer.diskStorage({
     destination: "./uploads",
-    filename: async (req: Request<any, any, {user: {_id: string, userName: string, email: string, isLogged: boolean}}>, file, callback) => {
+    filename: async (req: Request<{userName:string}>, file, callback) => {
 
-        const { user: {userName} } = req.body
+      const { userName  } = req.params
       
       const filteredPic = fileNameFilter(userName);
   

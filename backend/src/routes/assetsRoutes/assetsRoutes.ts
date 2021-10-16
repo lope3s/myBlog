@@ -12,14 +12,11 @@ const upload = multer({
     fileSize: 1000000,
   },
 }).single("image");
-//como enviar arquivos pelo body da requisição
 
-
-assetsRoutes.post("/upload", tokenAuthenticate(),(req: Request<any, any, {user: {_id: string, userName: string, email: string, isLogged: boolean}}>, res: Response) => {
-  //adicionar validação de usuário
+assetsRoutes.post("/upload/:userName", tokenAuthenticate(),(req: Request<{userName:string}>, res: Response) => {
     upload(req, res, (err: any) => {
       if (!err) {
-        console.log("File:", req);
+        console.log("File:", req.file);
         res.sendStatus(200);
         res.end();
       } else {
