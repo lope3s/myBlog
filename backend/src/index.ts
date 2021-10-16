@@ -9,6 +9,10 @@ import tokenRoute from './routes/authRoutes/tokenLoginRoute';
 
 import postRoute from './routes/postRoutes/postRoutes';
 
+import commentRoute from './routes/commentsRoutes/commentsRoutes';
+
+import likeRoute from './routes/likeRoutes/likeRoutes';
+
 const app = express();
 
 app.use(cors());
@@ -21,6 +25,10 @@ app.use('/myBlogApi', loginRoute);
 app.use('/myBlogApi', tokenRoute)
 
 app.use('/myBlogApi', postRoute)
+
+app.use('/myBlogApi', commentRoute)
+
+app.use('/myBlogApi', likeRoute)
 
 app.get('/myBlogApi', (_req, res) => {
     res.status(200).send({message: "attached"}).end();
