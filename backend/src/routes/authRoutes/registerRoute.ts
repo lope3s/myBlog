@@ -21,8 +21,7 @@ registerRoute.post("/register", checkFields(['userName', 'password', 'email']), 
                     ...req.body, 
                     password: createPassHash(password),  
                     posts: [], 
-                    comments: [], 
-                    likes: [], 
+                    comments: [],
                     isLogged: false,
                     refreshToken: null
                 }

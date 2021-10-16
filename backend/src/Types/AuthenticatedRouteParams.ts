@@ -1,6 +1,6 @@
 import { ITokenfiedUser } from "./IUsers";
 
-export interface IPostParams {
+export interface IPostOrCommentParams {
     content: string;
     user: ITokenfiedUser
 }

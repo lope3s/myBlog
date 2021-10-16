@@ -4,13 +4,13 @@ import { tokenAuthenticate } from '../../middlewares/tokenAuthenticate';
 import { checkFields } from '../../middlewares/checkFields';
 
 import { ObjectId } from 'mongodb';
-import { IPostParams } from '../../Types/AuthenticatedRouteParams';
+import { IPostOrCommentParams } from '../../Types/AuthenticatedRouteParams';
 import { IUser } from '../../Types/IUsers';
 
 const db = client.db()
 const postRoute = express.Router()
 
-postRoute.post('/createPost', tokenAuthenticate(), checkFields(['content']),async (req: Request<any, any, IPostParams>, res: Response) => {
+postRoute.post('/createPost', tokenAuthenticate(), checkFields(['content']),async (req: Request<any, any, IPostOrCommentParams>, res: Response) => {
     try {
         const { content, user } = req.body
 
@@ -64,7 +64,7 @@ postRoute.get('/getUserPosts/:userId', tokenAuthenticate(), async(req: Request<{
     }
 })
 
-postRoute.put('/updatePost/:postId', tokenAuthenticate(), checkFields(['content']), async(req: Request<{postId: string}, any, IPostParams>, res: Response) => {
+postRoute.put('/updatePost/:postId', tokenAuthenticate(), checkFields(['content']), async(req: Request<{postId: string}, any, IPostOrCommentParams>, res: Response) => {
     try {
         const { postId } = req.params
         const { user, content } = req.body

@@ -5,9 +5,8 @@ export interface IUser {
     userName: string;
     email: string;
     password: string;
-    posts: string;
-    comments: string[] | ObjectId[];
-    likes: string[] | ObjectId[];
+    posts: string[];
+    comments: string[];
     refreshToken: string | ObjectId;
     isLogged: boolean;
 }
