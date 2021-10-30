@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/"
+  },
   "devDependencies": {
     "typescript": "^4.4.4"
   },
   "dependencies": {
     "apollo-server": "^3.4.0",
-    "graphql": "^15.6.1"
+    "graphql": "^15.6.1",
+    "ts-node-dev": "^1.1.8"
   }
 }
