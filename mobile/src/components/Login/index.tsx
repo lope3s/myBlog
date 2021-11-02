@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from 'react-native';
-import { View, MainContent, MainLogo, Button } from './style';
+import { View, MainContent, MainLogo, Button, Link } from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import StyledInputBox from '../StyledInputBox'
@@ -38,6 +38,9 @@ const Login: React.FC<ITest> = ({navigation}) => {
                 <Button>
                     <Text style = {{color: "#fff", fontSize: 18}}> Login </Text>
                 </Button>
+                <Link onPress = {() => navigation.navigate('Register')}>
+                    <Text style = {{color: "#E9A6A6", fontSize: 15}}> Resgistrar </Text>
+                </Link>
             </MainContent>
         </View>
     )
