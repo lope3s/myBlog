@@ -20,7 +20,7 @@ export const MainContent = styled.View`
 export const MainLogo = styled.Text`
     font-size: 45px;
     color: #fff;
-    margin: 20% 0;
+    margin-bottom: 10%;
 `
 
 export const Button = styled.Pressable`
