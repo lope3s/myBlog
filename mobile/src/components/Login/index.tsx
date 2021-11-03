@@ -35,7 +35,7 @@ const Login: React.FC<ITest> = ({navigation}) => {
                     />
                 </StyledInputBox>
 
-                <Button>
+                <Button onPress = {() => navigation.navigate('Profile')}>
                     <Text style = {{color: "#fff", fontSize: 18}}> Login </Text>
                 </Button>
             </MainContent>
