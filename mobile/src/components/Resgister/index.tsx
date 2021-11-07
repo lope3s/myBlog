@@ -11,6 +11,7 @@ interface ITest {
 }
 
 const Register: React.FC<ITest> = ({navigation}) => {
+
     return (
         <View>
             <MainContent>
