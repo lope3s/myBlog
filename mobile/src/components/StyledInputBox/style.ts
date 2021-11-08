@@ -8,7 +8,7 @@ export const InputBox = styled.View<IInputBox>`
     width: ${props => props.width};
     border: 2px solid #3F3351;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-top: 5%;
 `
 
 export const IconBox = styled.View`
