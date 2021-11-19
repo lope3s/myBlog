@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text } from 'react-native';
-import { View, MainContent, MainLogo, Button, Link, ErrrorMessage } from './style';
+import { View, MainContent, MainLogo, Button, Link, ErrorMessage } from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as NewIcon from 'react-native-vector-icons/Feather';
 import { useFormik } from 'formik';
@@ -66,7 +66,7 @@ const Register: React.FC<ITest> = ({navigation}) => {
     }
 
     if (data){
-        navigation.navigate('Login')
+        navigation.navigate('Login', {data: data.register.message})
     }
 
     return (
@@ -95,7 +95,7 @@ const Register: React.FC<ITest> = ({navigation}) => {
                         color = "#fff"
                     />
                 </StyledInputBox>
-                {touched.userName && errors.userName ? <ErrrorMessage> {errors.userName} </ErrrorMessage> : serverError.userName.length > 0 && <ErrrorMessage>{serverError.userName}</ErrrorMessage>}
+                {touched.userName && errors.userName ? <ErrorMessage> {errors.userName} </ErrorMessage> : serverError.userName.length > 0 && <ErrorMessage>{serverError.userName}</ErrorMessage>}
                 <StyledInputBox
                     returnKeyType="next"
                     width = "95%"
@@ -117,7 +117,7 @@ const Register: React.FC<ITest> = ({navigation}) => {
                         color = "#fff"
                     />
                 </StyledInputBox>
-                {touched.email && errors.email ? <ErrrorMessage> {errors.email} </ErrrorMessage> : serverError.email.length > 0 && <ErrrorMessage>{serverError.email}</ErrrorMessage>}
+                {touched.email && errors.email ? <ErrorMessage> {errors.email} </ErrorMessage> : serverError.email.length > 0 && <ErrorMessage>{serverError.email}</ErrorMessage>}
                 <StyledInputBox
                     returnKeyType="next"
                     width = "95%"
@@ -138,7 +138,7 @@ const Register: React.FC<ITest> = ({navigation}) => {
                         color = "#fff"
                     />
                 </StyledInputBox>
-                {touched.password && errors.password && <ErrrorMessage> {errors.password} </ErrrorMessage>}
+                {touched.password && errors.password && <ErrorMessage> {errors.password} </ErrorMessage>}
                 <StyledInputBox
                     returnKeyType="go"
                     width = "95%"
@@ -156,14 +156,14 @@ const Register: React.FC<ITest> = ({navigation}) => {
                         color = "#fff"
                     />
                 </StyledInputBox>
-                {touched.confirmPassword && errors.confirmPassword && <ErrrorMessage> {errors.confirmPassword} </ErrrorMessage>}
+                {touched.confirmPassword && errors.confirmPassword && <ErrorMessage> {errors.confirmPassword} </ErrorMessage>}
                 <Button onPress = {handleSubmit}>
                     <Text style = {{color: "#fff", fontSize: 18}}> Registrar </Text>
                 </Button>
                 {
                     error &&
                     error.networkError &&
-                    <ErrrorMessage> Sem acesso à internet </ErrrorMessage>
+                    <ErrorMessage> Sem acesso à internet </ErrorMessage>
                 }
                 <Link onPress = {() => navigation.navigate('Login')}>
                     <Text style = {{color: "#E9A6A6", fontSize: 15}}> Voltar ao Login </Text>

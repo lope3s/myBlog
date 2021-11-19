@@ -40,7 +40,7 @@ export const Link = styled.Pressable`
     margin-top: 5%;
 `
 
-export const ErrrorMessage = styled.Text`
+export const ErrorMessage = styled.Text`
     color: #f00;
     margin-top: 2.5%;
 `
