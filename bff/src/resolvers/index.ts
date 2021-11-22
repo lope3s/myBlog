@@ -8,6 +8,11 @@ const resolvers = {
             const data = await dataSources.registerAPI.registerUser(userObject)
 
             return data
+        },
+        login: async (_: any, userObject: any, {dataSources}: any) => {
+            const data = await dataSources.loginAPI.login(userObject)
+
+            return data
         }
     }
 }
