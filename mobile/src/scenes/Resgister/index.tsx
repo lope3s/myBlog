@@ -5,11 +5,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as NewIcon from 'react-native-vector-icons/Feather';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useMutation, gql } from '@apollo/client';
-import { Loading } from '../LoadingComponent/index';
+import { useMutation } from '@apollo/client';
+import { Loading } from '../../components/LoadingComponent/index';
 import useNextInput from "../../Hooks/InputHook";
+import registerError from "../../Services/GraphErrorHandling/registerError";
+import { REGISTER_QUERY } from "../../GraphQueries/registerQueries";
 
-import StyledInputBox from '../StyledInputBox';
+import StyledInputBox from '../../components/StyledInputBox';
 
 interface ITest {
     navigation: any
@@ -17,13 +19,7 @@ interface ITest {
 
 const Register: React.FC<ITest> = ({navigation}) => {
     const { focusNextField, addInput } = useNextInput()
-    const [mutateFunction, {data, loading, error}] = useMutation(gql`
-    mutation RegisterMutation($userName: String!, $email: String!, $password: String!) {
-        register (userName: $userName, email: $email, password: $password){
-          message
-        }
-      }
-    `)
+    const [mutateFunction, {data, loading, error}] = useMutation(REGISTER_QUERY)
     const [serverError, setServerError] = useState({userName: '', email: '', touched: false})
 
     const postForm = (values: any) => {
@@ -51,18 +47,8 @@ const Register: React.FC<ITest> = ({navigation}) => {
         onSubmit: postForm
     })
 
-    if (error?.graphQLErrors[0] && !serverError.touched){
-        const err = error?.graphQLErrors[0] as any
-        const errValues = err.extensions.response.body.message
-
-        const obj = {userName: '', email: ''} as any
-
-        errValues.forEach((string: string) => {
-            const splitedValues = string.split(':')
-            obj[splitedValues[0]] =  splitedValues[1]
-        })
-
-        setServerError({...obj, touched: true})
+    if (error){
+        registerError(error, serverError, setServerError)
     }
 
     if (data){

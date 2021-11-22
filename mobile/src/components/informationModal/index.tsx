@@ -29,7 +29,7 @@ export const InformationModal: React.FC<IInformationModal> = ({text, children}) 
 
     Animated.sequence([
         forwardAnimation,
-        Animated.delay(250),
+        Animated.delay(2000),
         backwardAnimation
     ]).start()
 
