@@ -20,7 +20,8 @@ interface ITest {
 }
 
 
-const Login: React.FC<ITest> = ({route, navigation}) => { 
+const Login: React.FC<ITest> = ({route, navigation}) => {
+    const [ messageDisplayed, setMessageDisplayed ] = useState(false)
     const [ serverError, setServerError ] = useState('')
     const [ login, { data, loading, error} ] = useMutation(LOGIN_QUERY)
     const postForm = (values: any) => {
@@ -47,6 +48,22 @@ const Login: React.FC<ITest> = ({route, navigation}) => {
 
     if (data){
         navigation.navigate('Home')
+    }
+
+    const displayMessage = () => {
+        setTimeout(() => {
+            setMessageDisplayed(true)
+        }, 3500)
+
+        return (
+            <InformationModal text = {route.params?.data}>
+                <SeccondIcon
+                    name = "check"
+                    size = {25}
+                    color = "#0f0"
+                />
+            </InformationModal>
+        )
     }
 
     return (
@@ -104,13 +121,7 @@ const Login: React.FC<ITest> = ({route, navigation}) => {
                 </Link>
             </MainContent>
             {
-                route.params?.data && <InformationModal text = {route.params?.data}>
-                    <SeccondIcon
-                        name = "check"
-                        size = {25}
-                        color = "#0f0"
-                    />
-                </InformationModal>
+                route.params?.data && !messageDisplayed && displayMessage()
             }
         </View>
     )
