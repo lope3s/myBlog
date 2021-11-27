@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const Home: React.FC = () => {
+const Profile: React.FC = () => {
 
     return (
         <View>
             <Text>
-                Home Page
+                Profile Page
             </Text>
         </View>
     )
 }
 
-export default Home
+export default Profile

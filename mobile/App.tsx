@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Login from './src/scenes/Login';
 import Register from './src/scenes/Resgister';
-import Home from './src/scenes/Home';
+import InnerAppPagination from './src/scenes/InnerAppPagination';
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
@@ -36,8 +36,8 @@ const App = () => {
             }}
           />
           <Stack.Screen
-            name = 'Home'
-            component = {Home}
+            name = 'InnerAppPagination'
+            component = {InnerAppPagination}
             options = {{
               headerShown: false
             }}
