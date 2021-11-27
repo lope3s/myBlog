@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, Animated } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Dimensions, Animated } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import * as shape from 'd3-shape';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
@@ -43,9 +43,12 @@ const right = shape.line<{x: number, y: number}>()
 
 const d = `${left} ${tab} ${right}`
 
+interface ITabbar {
+    navigation: any
+}
 
-const Tabbar: React.FC = () => {
-    const [ widthTranslate, setWidthTranslate ] = useState(new Animated.Value(-width))
+const Tabbar: React.FC<ITabbar> = ({ navigation }) => {
+    const [ widthTranslate ] = useState(new Animated.Value(-width))
 
     const translateTabbar = (value: number) => {
         Animated.spring(
@@ -63,21 +66,22 @@ const Tabbar: React.FC = () => {
                 <Path {...{d}} fill = "#A06083"/>
             </AnimatedSVG>
             <View style = {[StyleSheet.absoluteFill, styles.buttonsBox]}>
-                <TabbarButtons translateTabbar = {translateTabbar} value = {0}>
+                <TabbarButtons translateTabbar = {translateTabbar} value = {0} navigation = {navigation} name = "Home">
                     <FAIcon
                         name = "home"
                         size = {35}
                         color = "#fff"
                     />
                 </TabbarButtons>
-                <TabbarButtons translateTabbar = {translateTabbar} value = {1}>
+                <TabbarButtons translateTabbar = {translateTabbar} value = {1} navigation = {navigation} name = "Post">
                     <IOIcon
                         name = "add-circle-outline"
                         size = {35}
                         color = "#fff"
+                        style = {{marginLeft: 3}}
                     />
                 </TabbarButtons>
-                <TabbarButtons translateTabbar = {translateTabbar} value = {2}>
+                <TabbarButtons translateTabbar = {translateTabbar} value = {2} navigation = {navigation} name = "Profile">
                     <IOIcon
                         name = "person-circle-outline"
                         size = {35}

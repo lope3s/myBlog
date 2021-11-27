@@ -4,12 +4,17 @@ import { View, Animated, Pressable, StyleSheet } from 'react-native';
 interface ITabbarButton {
     translateTabbar: (value: number) => void
     value: number
+    name: string
+    navigation: any
 }
 
-const TabbarButtons: React.FC<ITabbarButton> = ({ children, translateTabbar, value }) => {
-    const [ animatedValue, setAnimatedValue ] = useState(new Animated.Value(0))
-    const [ animatedOpacity, setAnimatedOpacity ] = useState(new Animated.Value(0))
+const TabbarButtons: React.FC<ITabbarButton> = ({ children, translateTabbar, value, name, navigation }) => {
+    const routes = navigation.getState().history
+    const routeName = routes.length ? routes[routes.length - 1].key.split('-')[0] : "Home"
+    const [ animatedValue ] = useState(new Animated.Value(0))
+    const [ animatedOpacity ] = useState(new Animated.Value(0))
     const [ displayChildren, setDisplayChildren ] = useState(true)
+
     
     const AnimateButton = () => {
         translateTabbar(value)
@@ -24,6 +29,28 @@ const TabbarButtons: React.FC<ITabbarButton> = ({ children, translateTabbar, val
                 useNativeDriver: true,
             })
         ]).start()
+    }
+
+    const DeAnimateButton = () => {
+        Animated.parallel([
+            Animated.spring(animatedValue, {
+                toValue: 0,
+                useNativeDriver: true,
+            }),
+            Animated.spring(animatedOpacity, {
+                toValue: 0,
+                useNativeDriver: true
+            })
+        ]).start()
+        setDisplayChildren(true)
+    }
+
+    if (name === routeName && displayChildren) {
+        AnimateButton()
+    }
+
+    if (!displayChildren && name !== routeName) {
+        DeAnimateButton()
     }
 
     const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
@@ -55,7 +82,7 @@ const TabbarButtons: React.FC<ITabbarButton> = ({ children, translateTabbar, val
     return (
         <View style = {[ styles.box ]}>
             { displayChildren && children}
-            <AnimatedPressable style = {[ StyleSheet.absoluteFill, styles.animatedBox, styles.opacityBox ]} onPress = {AnimateButton}>
+            <AnimatedPressable style = {[ StyleSheet.absoluteFill, styles.animatedBox, styles.opacityBox ]} onPress = {() => navigation.navigate({name, merge: true})}>
                 {children}
             </AnimatedPressable>
         </View>

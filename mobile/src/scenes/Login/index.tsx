@@ -47,7 +47,7 @@ const Login: React.FC<ITest> = ({route, navigation}) => {
     }
 
     if (data){
-        navigation.navigate('Home')
+        navigation.navigate('InnerAppPagination')
     }
 
     const displayMessage = () => {
