@@ -41,7 +41,7 @@ tokenRoute.post('/tokenRefresh', checkFields(['refreshToken']), async(req: Reque
             return res.status(403).send({message: "Token expirado, faça login para atualizar"}).end()
         }
 
-        const token = jwt.sign(userDate!, String(process.env.HASH_TOKEN_DATA))
+        const token = jwt.sign(userDate!, String(process.env.HASH_TOKEN_DATA), {expiresIn: '30m'})
 
         return res.status(200).send({token}).end()
 

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 export const checkFields = (fields: string[]) => (req: Request, res: Response, next: NextFunction) => {
+    
     const mapMissingFields = fields.filter(key => {
         if (!Object.keys(req.body).includes(key)){
             return key

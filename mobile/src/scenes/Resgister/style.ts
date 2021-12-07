@@ -11,7 +11,6 @@ export  const View = styled.View`
 
 export const MainContent = styled.View`
     width: 80%;
-    height: 60%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,7 +19,7 @@ export const MainContent = styled.View`
 export const MainLogo = styled.Text`
     font-size: 45px;
     color: #fff;
-    margin-bottom: 20%;
+    margin-bottom: 5%;
 `
 
 export const Button = styled.Pressable`
@@ -31,4 +30,17 @@ export const Button = styled.Pressable`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    margin-top: 5%;
+`
+
+export const Link = styled.Pressable`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+`
+
+export const ErrorMessage = styled.Text`
+    color: #f00;
+    margin-top: 2.5%;
 `
