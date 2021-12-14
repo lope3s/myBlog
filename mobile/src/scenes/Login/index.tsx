@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text} from 'react-native';
-import {View, MainContent, MainLogo, Button, Link, ErrorMessage} from './style';
+import {View, MainContent, MainLogo, Link, ErrorMessage} from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SeccondIcon from 'react-native-vector-icons/Entypo';
 import {InformationModal} from '../../components/informationModal';
@@ -14,7 +14,8 @@ import loginError from '../../Services/GraphErrorHandling/loginError';
 import {useStoreActions} from 'easy-peasy';
 import {IMainModel} from '../../Types';
 import {decode} from 'react-native-pure-jwt';
-import {setItem} from '../../Services/AsyncStoraServices';
+import {setItem} from '../../Services/AsyncStorageServices';
+import {Button} from '../../components/Button';
 
 import StyledInputBox from '../../components/StyledInputBox';
 
@@ -113,9 +114,7 @@ const Login: React.FC<ITest> = ({route, navigation}) => {
         {touched.password && errors.password && (
           <ErrorMessage> {errors.password} </ErrorMessage>
         )}
-        <Button onPress={handleSubmit}>
-          <Text style={{color: '#fff', fontSize: 18}}> Login </Text>
-        </Button>
+        <Button onPress={handleSubmit} text="Login" />
         {serverError.length > 0 && <ErrorMessage> {serverError} </ErrorMessage>}
         <Link onPress={() => navigation.navigate('Register')}>
           <Text style={{color: '#E9A6A6', fontSize: 15}}> Resgistrar </Text>

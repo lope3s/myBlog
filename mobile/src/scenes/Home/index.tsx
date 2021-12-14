@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {useStoreState} from 'easy-peasy';
 import {IUserModel, IMainModel} from '../../Types';
-import {getItem} from '../../Services/AsyncStoraServices';
+import {getItem} from '../../Services/AsyncStorageServices';
 
 const Home: React.FC = () => {
   const {user} = useStoreState<IMainModel, IUserModel>(

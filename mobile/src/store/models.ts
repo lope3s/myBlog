@@ -1,5 +1,12 @@
-import {IUserModel, IUser, IMainModel} from '../Types';
+import {IUserModel, IUser, IMainModel, IKeyboardModel} from '../Types';
 import {action} from 'easy-peasy';
+
+const keyboardModel: IKeyboardModel = {
+  status: false,
+  updateStatus: action((state, payload) => {
+    state.status = payload;
+  }),
+};
 
 const userModel: IUserModel = {
   user: {} as IUser,
@@ -10,6 +17,7 @@ const userModel: IUserModel = {
 
 const mainModel: IMainModel = {
   userModel,
+  keyboardModel,
 };
 
 export default mainModel;
