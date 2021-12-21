@@ -19,8 +19,8 @@ export const CardsContainer = styled.View`
 export const Card = styled.View`
   background-color: #e9a6a6;
   width: 100%;
-  height: 80%;
-  border-radius: 10px;
+  height: 75%;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,6 +28,7 @@ export const Card = styled.View`
 
 export const TextView = styled.TextInput`
   width: 90%;
+  height: 70%;
   background-color: #de9999;
   border-radius: 10px;
   padding: 10px;

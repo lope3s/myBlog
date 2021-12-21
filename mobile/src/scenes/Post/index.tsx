@@ -11,6 +11,8 @@ import {
 import {Button} from '../../components/Button';
 import {useStoreState, useStoreActions} from 'easy-peasy';
 import {IMainModel, IUser} from '../../Types';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
 
 const Post: React.FC = () => {
   const user = useStoreState<IMainModel, IUser>(state => state.userModel.user);
@@ -20,15 +22,25 @@ const Post: React.FC = () => {
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', () => {
-      console.log('executado');
       updateState(true);
     });
 
     Keyboard.addListener('keyboardDidHide', () => {
-      console.log('executado2');
       updateState(false);
     });
   }, []);
+
+  const {values, handleChange, errors, handleSubmit} = useFormik({
+    initialValues: {
+      post: '',
+    },
+    validationSchema: Yup.object({
+      post: Yup.string().required('Digite algo para criar um post!'),
+    }),
+    onSubmit: values => {
+      console.log(values);
+    },
+  });
 
   return (
     <Container>
@@ -38,13 +50,14 @@ const Post: React.FC = () => {
             <CardTitle>{user.userName}</CardTitle>
           </CardInfo>
           <TextView
+            value={values.post}
+            onChangeText={handleChange('post')}
             multiline
             textAlignVertical="top"
-            numberOfLines={18}
             placeholder="Sobre o que quer falar hoje?"
           />
         </Card>
-        <Button text="Publicar" />
+        <Button onPress={handleSubmit} text="Publicar" />
       </CardsContainer>
     </Container>
   );

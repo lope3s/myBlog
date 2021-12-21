@@ -6,6 +6,7 @@ import Profile from '../Profile';
 import Post from '../Post';
 import {useStoreState} from 'easy-peasy';
 import {IMainModel, IKeyboardModel} from '../../Types';
+import {Header} from '../../components/Header';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,15 +18,17 @@ const InnerAppPagination: React.FC = () => {
   useEffect(() => {}, [status]);
 
   return (
-    <Tab.Navigator
-      tabBar={({navigation}) =>
-        status ? null : <Tabbar navigation={navigation} />
-      }
-      screenOptions={{headerShown: false}}>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Post" component={Post} />
-      <Tab.Screen name="Profile" component={Profile} />
-    </Tab.Navigator>
+    <Header>
+      <Tab.Navigator
+        tabBar={({navigation}) =>
+          status ? null : <Tabbar navigation={navigation} />
+        }
+        screenOptions={{headerShown: false}}>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Post" component={Post} />
+        <Tab.Screen name="Profile" component={Profile} />
+      </Tab.Navigator>
+    </Header>
   );
 };
 

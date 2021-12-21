@@ -62,7 +62,7 @@ const Tabbar: React.FC<ITabbar> = ({navigation}) => {
   };
 
   return (
-    <View style={{width, height: 64, backgroundColor: '#1F1D36'}}>
+    <View style={{width, height: 66, backgroundColor: '#1F1D36'}}>
       <AnimatedSVG
         {...{width: width * 2.5, height: 64}}
         style={{transform: [{translateX: widthTranslate}]}}>
