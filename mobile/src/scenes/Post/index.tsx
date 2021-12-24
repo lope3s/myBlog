@@ -13,6 +13,9 @@ import {useStoreState, useStoreActions} from 'easy-peasy';
 import {IMainModel, IUser} from '../../Types';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import { useMutation } from '@apollo/client';
+import {CREATE_POST_QUERY} from '../../GraphQueries/postQueries';
+
 
 const Post: React.FC = () => {
   const user = useStoreState<IMainModel, IUser>(state => state.userModel.user);
@@ -32,10 +35,10 @@ const Post: React.FC = () => {
 
   const {values, handleChange, errors, handleSubmit} = useFormik({
     initialValues: {
-      post: '',
+      content: '',
     },
     validationSchema: Yup.object({
-      post: Yup.string().required('Digite algo para criar um post!'),
+      content: Yup.string().required('Digite algo para criar um post!'),
     }),
     onSubmit: values => {
       console.log(values);
@@ -50,8 +53,8 @@ const Post: React.FC = () => {
             <CardTitle>{user.userName}</CardTitle>
           </CardInfo>
           <TextView
-            value={values.post}
-            onChangeText={handleChange('post')}
+            value={values.content}
+            onChangeText={handleChange('content')}
             multiline
             textAlignVertical="top"
             placeholder="Sobre o que quer falar hoje?"
