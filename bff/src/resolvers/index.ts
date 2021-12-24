@@ -13,6 +13,11 @@ const resolvers = {
             const data = await dataSources.loginAPI.login(userObject)
 
             return data
+        },
+        post: async(_: any, postObject: any, {dataSources}: any, info: any) => {
+            const data = await dataSources.postAPI.createPost(postObject)
+
+            return data
         }
     }
 }

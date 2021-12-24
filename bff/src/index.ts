@@ -4,6 +4,7 @@ import resolvers from './resolvers';
 
 import { RegisterAPI } from './dataSources/registerApi';
 import { LoginAPI } from './dataSources/loginApi';
+import { PostAPI } from './dataSources/postApi';
 
 const server = new ApolloServer({
     typeDefs,
@@ -11,7 +12,8 @@ const server = new ApolloServer({
     dataSources: () => {
         return {
             registerAPI: new RegisterAPI(),
-            loginAPI: new LoginAPI()
+            loginAPI: new LoginAPI(),
+            postAPI: new PostAPI()
         }
     }
 });
