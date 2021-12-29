@@ -3,7 +3,7 @@ import { gql } from "apollo-server"
 const typeDefs = gql`
 
     type Message {
-        message: String
+        message: String!
     }
 
     type Login {
@@ -18,6 +18,10 @@ const typeDefs = gql`
         password: String!
     }
 
+    type CreatePost {
+        content: String
+    }
+
     type Query {
         start: String
     }
@@ -25,6 +29,7 @@ const typeDefs = gql`
     type Mutation {
         register(userName: String!, email: String!, password: String!): Message
         login(email: String!, password: String!): Login
+        post(content: String!): Message
     }
 `
 
