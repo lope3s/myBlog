@@ -1,5 +1,11 @@
 import React from 'react';
-import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import {setContext} from '@apollo/client/link/context';
 
 import {StoreProvider} from 'easy-peasy';
 import store from './src/store/store';
@@ -7,16 +13,33 @@ import store from './src/store/store';
 import Router from './src/App.Routes';
 import {getItem} from './src/Services/AsyncStorageServices';
 
-const token = await getItem('token')
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000',
+});
 
-console.log('token', token)
+const authLink = setContext(async (_, {headers}) => {
+  try {
+    const token = await getItem('token');
+
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? 'a' + token : '',
+      },
+    };
+  } catch (error) {
+    return {
+      headers: {
+        ...headers,
+        authorization: '',
+      },
+    };
+  }
+});
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  headers: {
-    authorization: token
-  }
 });
 
 const App = () => {

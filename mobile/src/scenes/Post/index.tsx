@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Keyboard} from 'react-native';
 import {
   Container,
@@ -13,15 +13,24 @@ import {useStoreState, useStoreActions} from 'easy-peasy';
 import {IMainModel, IUser} from '../../Types';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import { useMutation } from '@apollo/client';
+import {useMutation} from '@apollo/client';
 import {CREATE_POST_QUERY} from '../../GraphQueries/postQueries';
-
+import {InformationModal} from '../../components/informationModal';
+import SuccessIcon from 'react-native-vector-icons/Entypo';
+import FaliureIcon from 'react-native-vector-icons/FontAwesome';
 
 const Post: React.FC = () => {
   const user = useStoreState<IMainModel, IUser>(state => state.userModel.user);
   const updateState = useStoreActions<IMainModel>(
     actions => actions.keyboardModel.updateStatus,
   );
+  const [postMutation, {data, loading, error}] = useMutation(CREATE_POST_QUERY);
+
+  const createPost = (data: any) => {
+    Keyboard.dismiss();
+    updateState(false);
+    postMutation({variables: data});
+  };
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', () => {
@@ -40,9 +49,7 @@ const Post: React.FC = () => {
     validationSchema: Yup.object({
       content: Yup.string().required('Digite algo para criar um post!'),
     }),
-    onSubmit: values => {
-      console.log(values);
-    },
+    onSubmit: createPost,
   });
 
   return (
@@ -62,6 +69,15 @@ const Post: React.FC = () => {
         </Card>
         <Button onPress={handleSubmit} text="Publicar" />
       </CardsContainer>
+      {/*(
+        <InformationModal text={messageDisplayed.content}>
+          {messageDisplayed.isError ? (
+            <FaliureIcon name="close" size={25} color="#f00" />
+          ) : (
+            <SuccessIcon name="check" size={25} color="#0f0" />
+          )}
+        </InformationModal>
+          )*/}
     </Container>
   );
 };

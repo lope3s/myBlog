@@ -58,6 +58,7 @@ const Login: React.FC<ITest> = ({route, navigation}) => {
   }
 
   if (data) {
+    console.log('token: ', data.login.token);
     setItem('token', data.login.token);
     setItem('refreshToken', data.login.refreshToken);
     decode(data.login.token, 'usoppn').then(res => {
