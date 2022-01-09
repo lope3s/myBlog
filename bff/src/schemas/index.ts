@@ -1,7 +1,6 @@
-import { gql } from "apollo-server"
+import { gql } from "apollo-server";
 
 const typeDefs = gql`
-
     type Message {
         message: String!
     }
@@ -10,16 +9,6 @@ const typeDefs = gql`
         message: String
         token: String
         refreshToken: String
-    }
-
-    input User {
-        username: String!
-        email: String!
-        password: String!
-    }
-
-    type CreatePost {
-        content: String
     }
 
     type Query {
@@ -31,6 +20,6 @@ const typeDefs = gql`
         login(email: String!, password: String!): Login
         post(content: String!): Message
     }
-`
+`;
 
-export default typeDefs
+export default typeDefs;
