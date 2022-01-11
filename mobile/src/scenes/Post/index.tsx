@@ -69,15 +69,16 @@ const Post: React.FC = () => {
         </Card>
         <Button onPress={handleSubmit} text="Publicar" />
       </CardsContainer>
-      {/*(
-        <InformationModal text={messageDisplayed.content}>
-          {messageDisplayed.isError ? (
-            <FaliureIcon name="close" size={25} color="#f00" />
-          ) : (
-            <SuccessIcon name="check" size={25} color="#0f0" />
-          )}
+      {error ? (
+        <InformationModal text={'Não foi possível criar seu post'}>
+          <FaliureIcon name="close" size={25} color="#f00" />
         </InformationModal>
-          )*/}
+      ) : null}
+      {data?.post ? (
+        <InformationModal text={data.post.message}>
+          <SuccessIcon name="check" size={25} color="#0f0" />
+        </InformationModal>
+      ) : null}
     </Container>
   );
 };

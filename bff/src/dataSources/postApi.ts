@@ -8,12 +8,18 @@ export class PostAPI extends RESTDataSource {
     }
 
     async createPost(post: IPostTypes, token: any) {
-        try {
-            return this.post("/createPost", post, {
+        return this.post("/createPost", post, {
+            headers: { authorization: token },
+        });
+    }
+
+    async getAllPosts(token: any) {
+        return this.get(
+            "/getPosts",
+            {},
+            {
                 headers: { authorization: token },
-            });
-        } catch (error) {
-            console.log("\n\n passei aqui \n\n");
-        }
+            }
+        );
     }
 }

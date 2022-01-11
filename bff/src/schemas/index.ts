@@ -11,8 +11,35 @@ const typeDefs = gql`
         refreshToken: String
     }
 
+    type Like {
+        userId: String
+        postId: String
+        _id: String
+    }
+
+    type Comment {
+        _id: String
+        postId: String
+        creationDate: String
+        likes: [Like]
+        content: String
+        userId: String
+        lastModified: String
+    }
+
+    type Post {
+        content: String
+        userId: String
+        _id: String
+        likes: [Like]
+        comments: [Comment]
+        creationDate: String
+        lastModified: String
+    }
+
     type Query {
         start: String
+        getAllPosts: [Post]
     }
 
     type Mutation {
