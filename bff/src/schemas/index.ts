@@ -26,7 +26,7 @@ const typeDefs = gql`
         _id: String
         postId: String
         creationDate: String
-        likes: [Like]
+        likes: [String]
         content: String
         userId: String
         lastModified: String
@@ -36,7 +36,7 @@ const typeDefs = gql`
         content: String
         userId: String
         _id: String
-        likes: [Like]
+        likes: [String]
         comments: [Comment]
         creationDate: String
         lastModified: String
@@ -46,6 +46,7 @@ const typeDefs = gql`
     type Query {
         start: String
         getAllPosts: [Post]
+        likeAPost(postId: String!): Message
     }
 
     type Mutation {

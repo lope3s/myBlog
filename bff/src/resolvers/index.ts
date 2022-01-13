@@ -53,11 +53,22 @@ const resolvers = {
 
             return joinedUserData;
         },
+        likeAPost: async (_: any, postId: any, { dataSources, user }: any) => {
+            if (!user) throw new AuthenticationError("Nenhum token fornecido");
+
+            if (!user.isLogged)
+                throw new ForbiddenError(
+                    "Você precisa estar logado para acessar esta rota"
+                );
+
+            const data = await dataSources.postAPI.likeAPost(
+                postId.postId,
+                user.token
+            );
+            return data;
+        },
     },
     Post: {
-        likes(parent: any) {
-            return parent.likes;
-        },
         comments(parent: any) {
             return parent.comments;
         },

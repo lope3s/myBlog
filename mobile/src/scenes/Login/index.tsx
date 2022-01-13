@@ -116,7 +116,9 @@ const Login: React.FC<ITest> = ({route, navigation}) => {
           <ErrorMessage> {errors.password} </ErrorMessage>
         )}
         <Button onPress={handleSubmit} text="Login" />
-        {serverError.length > 0 && <ErrorMessage> {serverError} </ErrorMessage>}
+        {serverError?.length > 0 && (
+          <ErrorMessage> {serverError} </ErrorMessage>
+        )}
         <Link onPress={() => navigation.navigate('Register')}>
           <Text style={{color: '#E9A6A6', fontSize: 15}}> Resgistrar </Text>
         </Link>

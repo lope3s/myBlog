@@ -25,15 +25,25 @@ const Post: React.FC = () => {
   const updateState = useStoreActions<IMainModel>(
     actions => actions.keyboardModel.updateStatus,
   );
-  const [postMutation, {data, loading, error}] = useMutation(
+  const [postMutation, {data, loading, error, reset}] = useMutation(
     CREATE_POST_QUERY,
     {refetchQueries: [GET_ALL_POSTS]},
   );
 
-  const createPost = (data: any) => {
+  const createPost = async (data: any) => {
     Keyboard.dismiss();
     updateState(false);
-    postMutation({variables: data});
+    try {
+      const post = await postMutation({variables: data});
+
+      if (post?.data) {
+        resetForm();
+      }
+
+      setTimeout(reset, 3500);
+    } catch (e: any) {
+      console.log({e});
+    }
   };
 
   useEffect(() => {
@@ -46,7 +56,7 @@ const Post: React.FC = () => {
     });
   }, []);
 
-  const {values, handleChange, errors, handleSubmit} = useFormik({
+  const {values, handleChange, errors, handleSubmit, resetForm} = useFormik({
     initialValues: {
       content: '',
     },

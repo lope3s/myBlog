@@ -22,4 +22,14 @@ export class PostAPI extends RESTDataSource {
             }
         );
     }
+
+    async likeAPost(postId: string, token: string) {
+        return this.get(
+            `/postLike/${postId}`,
+            {},
+            {
+                headers: { authorization: token },
+            }
+        );
+    }
 }
