@@ -15,6 +15,7 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {useMutation} from '@apollo/client';
 import {CREATE_POST_QUERY} from '../../GraphQueries/postQueries';
+import {GET_ALL_POSTS} from '../../GraphQueries/homeQueries';
 import {InformationModal} from '../../components/informationModal';
 import SuccessIcon from 'react-native-vector-icons/Entypo';
 import FaliureIcon from 'react-native-vector-icons/FontAwesome';
@@ -24,7 +25,10 @@ const Post: React.FC = () => {
   const updateState = useStoreActions<IMainModel>(
     actions => actions.keyboardModel.updateStatus,
   );
-  const [postMutation, {data, loading, error}] = useMutation(CREATE_POST_QUERY);
+  const [postMutation, {data, loading, error}] = useMutation(
+    CREATE_POST_QUERY,
+    {refetchQueries: [GET_ALL_POSTS]},
+  );
 
   const createPost = (data: any) => {
     Keyboard.dismiss();

@@ -13,7 +13,58 @@ const resolvers = {
 
             const data = await dataSources.postAPI.getAllPosts(user.token);
 
-            return data;
+            const verifiedIds: any[] = [];
+
+            const fechedUserData = await Promise.all(
+                data.posts.map(async (post: any) => {
+                    if (!verifiedIds.includes(post.userId)) {
+                        verifiedIds.push(post.userId);
+                        const postUser = await dataSources.userAPI.getUserById(
+                            post.userId,
+                            user.token
+                        );
+
+                        const {
+                            password,
+                            email,
+                            posts,
+                            comments,
+                            isLogged,
+                            refreshToken,
+                            ...rest
+                        } = postUser;
+
+                        return rest;
+                    }
+                })
+            );
+
+            const filteredUserFetchedData = fechedUserData.filter(
+                (val) => val !== undefined
+            );
+
+            const joinedUserData = data.posts.map((value: any) => {
+                const matchedUser = filteredUserFetchedData.find(
+                    (val: any) => val._id === value.userId
+                );
+
+                return { ...value, user: matchedUser };
+            });
+
+            return joinedUserData;
+        },
+    },
+    Post: {
+        likes(parent: any) {
+            return parent.likes;
+        },
+        comments(parent: any) {
+            return parent.comments;
+        },
+    },
+    Comment: {
+        likes(parent: any) {
+            return parent.likes;
         },
     },
 

@@ -5,6 +5,11 @@ const typeDefs = gql`
         message: String!
     }
 
+    type User {
+        _id: String
+        userName: String
+    }
+
     type Login {
         message: String
         token: String
@@ -35,6 +40,7 @@ const typeDefs = gql`
         comments: [Comment]
         creationDate: String
         lastModified: String
+        user: User
     }
 
     type Query {

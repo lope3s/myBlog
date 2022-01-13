@@ -6,6 +6,7 @@ import { verify } from "jsonwebtoken";
 import { RegisterAPI } from "./dataSources/registerApi";
 import { LoginAPI } from "./dataSources/loginApi";
 import { PostAPI } from "./dataSources/postApi";
+import { UserAPI } from "./dataSources/userApi";
 
 const server = new ApolloServer({
     typeDefs,
@@ -15,6 +16,7 @@ const server = new ApolloServer({
             registerAPI: new RegisterAPI(),
             loginAPI: new LoginAPI(),
             postAPI: new PostAPI(),
+            userAPI: new UserAPI(),
         };
     },
     context: ({ req }) => {
